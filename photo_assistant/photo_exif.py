@@ -32,6 +32,18 @@ def get_camera_model(fileName):
     else:
         return 'unknown'
 
+def get_photo_res(fileName):
+    exif = get_exif_data(fileName)
+    width = 0
+    height = 0
+    resWidthTag = 'ExifImageWidth'
+    resHeightTag = 'ExifImageHeight'
+    if resWidthTag in list(exif.keys()):
+        width = exif[resWidthTag]
+    if resHeightTag in list(exif.keys()):
+        height = exif[resHeightTag]
+
+    return width, height
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -39,6 +51,7 @@ if __name__ == '__main__':
             eg, ./a.out filename')
     else:
         fileName = sys.argv[1]
-        #exif = get_exif_data(fileName)
-        print(get_photo_time(fileName))
-        print(get_camera_model(fileName))
+        exif = get_exif_data(fileName)
+        print(exif)
+        #print(get_photo_time(fileName))
+        #print(get_camera_model(fileName))
