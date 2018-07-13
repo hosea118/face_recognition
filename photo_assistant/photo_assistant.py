@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 import sys
 import os,shutil
 import re
@@ -5,7 +6,8 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 import photo_exif
 import debug
-import recognize_faces_in_pictures as rec_face
+import face_baidu
+import time
 
 classify_photo_by_date = 0
 
@@ -33,7 +35,8 @@ def classify_by_date(out_dir, file_name):
     copy_file(copy_path, file_name)
 
 def classify_by_face(out_dir, file_name):
-    result = rec_face.face_recognition_in_pic(file_name)
+    #result = rec_face.face_recognition_in_pic(file_name)
+    result = face_baidu.recognize_face(file_name)
     logger.info('result is %s' % result)
 
     copy_path = out_dir + '/' + result
@@ -52,6 +55,7 @@ if __name__ == '__main__':
             os.mkdir(log_dir)
         global logger
         logger = debug.logger_init(log_dir, 'debug')
+        face_baidu.init_face_sdk()
         #创建分类文件夹
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
@@ -65,5 +69,6 @@ if __name__ == '__main__':
                         classify_by_date(out_dir, file_path)
                     else:
                         classify_by_face(out_dir, file_path)
+        face_baidu.deinit_face_sdk()
 
 

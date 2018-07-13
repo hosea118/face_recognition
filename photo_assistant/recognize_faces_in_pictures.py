@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 import face_recognition
 import logging as logger
 import os
