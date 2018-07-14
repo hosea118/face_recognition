@@ -51,7 +51,7 @@ def detect_face(file_name):
     content_dict =  json.loads(content)
     if content_dict['error_msg'] == 'SUCCESS':
         #print('face_probability is %f' % content_dict['result']['face_list'][0]['face_probability'])
-        if content_dict['result']['face_list'][0]['face_probability'] > 0.5:
+        if content_dict['result']['face_list'][0]['face_probability'] > 0.6:
             return content_dict['result']['face_num'], encode_photo
         else:
             return 0, None
@@ -150,6 +150,8 @@ def recognize_face(file_name):
         return 'three_face'
     elif face_num > 3:
         return 'more_face'
+    elif face_num == 0:
+        return 'no_face'
     else:
         result = search_face(base64_photo)
         if result == None:
@@ -168,4 +170,5 @@ if __name__ == '__main__':
     deinit_face_sdk()
     #print(get_user_num(group_id))
     print(recognize_face(sys.argv[1]))
+    deinit_face_sdk()
 
