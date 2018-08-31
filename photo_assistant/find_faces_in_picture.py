@@ -12,7 +12,7 @@ image = face_recognition.load_image_file(sys.argv[1])
 # Find all the faces in the image using the default HOG-based model.
 # This method is fairly accurate, but not as accurate as the CNN model and not GPU accelerated.
 # See also: find_faces_in_picture_cnn.py
-face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model='cnn')
+face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=1, model='hog')
 
 print("I found {} face(s) in this photograph.".format(len(face_locations)))
 
